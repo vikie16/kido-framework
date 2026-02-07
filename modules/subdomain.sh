@@ -16,9 +16,9 @@ base_dir=$2
 
 subdir="$base_dir/subdomains"
 mkdir -p "$subdir"
-
+echo "=============================="
 echo "[*] Subdomain Enumeration for : $domain"
-
+echo "=============================="
 
 # Assetfinder tool
 echo "[*] Assetfinder "
@@ -33,7 +33,7 @@ subfinder -d "$domain" -all -recursive -silent -o "$subdir/subfinder.txt"
 
 echo "[*] crt.sh "
 
-curl -s "https://crt.sh/\?q\=$domain\&output\=json" | jq -r '.[].name_value' | grep -Po '(\w+\.\w+\.\w+)$' > "$subdir/crtsh.txt"
+curl -s https://crt.sh/\?q\=$domain\&output\=json | jq -r '.[].name_value' | grep -Po '(\w+\.\w+\.\w+)$' > "$subdir/crtsh.txt"
 
 # Amass tool
 #*/echo "[*] Amass "
