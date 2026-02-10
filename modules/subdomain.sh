@@ -1,16 +1,6 @@
 #! /bin/bash
 
 
-banner (){
-
-echo -e "${RED} _  _____ ____   ___  ____    _   _   _ ____ ${RESET}"
-echo -e "${RED}| |/ /_ _|  _ \ / _ \/ ___|  / \ | | | |  _ \ ${RESET}"
-echo -e "${RED}| ' / | || | | | | | \___ \ / _ \| | | | |_) |${RESET}"
-echo -e "${RED}| . \ | || |_| | |_| |___) / ___ \ |_| |  _ < ${RESET}"
-echo -e "${RED}|_|\_\___|____/ \___/|____/_/   \_\___/|_| \_\ ${RESET}"
-}
-
-
 domain=$1
 base_dir=$2
 
@@ -36,9 +26,12 @@ echo "[*] crt.sh "
 curl -s https://crt.sh/\?q\=$domain\&output\=json | jq -r '.[].name_value' | grep -Po '(\w+\.\w+\.\w+)$' > "$subdir/crtsh.txt"
 
 # Amass tool
-#*/echo "[*] Amass "
-#amass enum -d "$domain" > "$subdir/amass.txt"
-#
+echo "[*] Amass "
+amass enum -d "$domain" > "$subdir/amass.txt"
+
+# Chaos.txt
+echo "[*] Chaos.txt "
+chaos -d "$domain" -silent -o "$subdir/chaos.txt"
 # Combine and sort unique subdomains
 
 cat "$subdir/"*.txt | sort -u > "$subdir/all_subdomains.txt"
