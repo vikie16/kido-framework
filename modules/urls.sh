@@ -40,6 +40,16 @@ gau --subs < "$live_file" > "$urlsdir/urls_gau.txt"
 echo "[*] Using Katana to crawl URLs..."
 katana -list "$live_file" -silent -d 5 -kf -jc > "$urlsdir/urls_katana.txt"
 
+# Using Wayback 
+
+echo "[*] Fetching URLs from Wayback Machine..."
+
+curl -s --connection-timeout 10  "http://web.archive.org/cdx/search/cdx?url=*.$domain&output=text&fl=original&collapse=urlkey" | grep "\.$domain" >> "$urlsdir/urls_wayback.txt"
+
+# Hakrawler Tool
+
+echo "[*] Runinng Hakrawler to fetch URLs..."
+cat "$live_file" | hakrawler -silent -d 5 -plain | sort -u > "$urlsdir/urls_hakrawler.txt"
 # Filter Katana urls
 
 cat "$urlsdir"/urls_*.txt | sort -u > "$urlsdir/urls_raw.txt"
