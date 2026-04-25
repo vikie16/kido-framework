@@ -36,7 +36,7 @@ chaos -d "$domain" -silent -o "$subdir/chaos.txt"
 
 # Findomain Tool
 echo "[*] Findomain "
-findomain -t "$domain" -q | sort -u "$subdir/findomain.txt"
+findomain -t "$domain" -q | sort -u > "$subdir/findomain.txt"
 
 
 # Combine and sort unique subdomains
